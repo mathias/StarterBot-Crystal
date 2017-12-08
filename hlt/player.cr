@@ -1,4 +1,4 @@
-require "ship"
+require "./ship"
 
 class Player
   getter :id

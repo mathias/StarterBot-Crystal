@@ -1,7 +1,7 @@
-#require 'player'
-#require 'planet'
-#require 'ship'
-#require 'position'
+require "./player"
+require "./planet"
+require "./ship"
+require "./position"
 
 # Map which houses the current game information/metadata.
 
@@ -15,14 +15,14 @@ class Map
   @width : Int32
   @height : Int32
   @players : Hash(Int32, Player)
-  @planets : Hash(Int32, Player)
+  @planets : Hash(Int32, Planet)
 
   def initialize(player_id, width, height)
     @my_id = player_id.to_i
     @width = width.to_i
     @height = height
-    @players = {} of Integer => Player
-    @planets = {} of Integer => Planet
+    @players = {} of Int32 => Player
+    @planets = {} of Int32 => Planet
   end
 
   # return: Array of all players
@@ -55,7 +55,7 @@ class Map
   end
 
   def ships
-    players.map(&:ships).flatten
+    players.map { |p| p.ships }.flatten
   end
 
   def update(input)
@@ -63,7 +63,7 @@ class Map
     @players, tokens = Player.parse(tokens)
     @planets, tokens = Planet.parse(tokens)
 
-    raise if tokens.length != 0
+    raise("Unexpected data") if tokens.size != 0
     link
   end
 
@@ -104,7 +104,10 @@ class Map
 
   # Update each ship + planet with the completed player and planet objects
   private def link
-    (planets + ships).each do |entity|
+    planets.each do |entity|
+      entity.link(@players, @planets)
+    end
+    ships.each do |entity|
       entity.link(@players, @planets)
     end
   end
