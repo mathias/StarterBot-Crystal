@@ -1,4 +1,4 @@
-#require "./util"
+require "./util"
 
 # The entity abstract base-class represents all game entities possible. As a
 # base all entities possess a position, radius, an owner and an id. Note
@@ -36,7 +36,7 @@ class Entity
   # target: The target to get the angle between. Responds to x & y.
   # return: Angle between entities in degrees (int)
   def calculate_deg_angle_between(target)
-    calculate_rad_angle_between(target).angle_rad_to_deg_clipped
+    Util.angle_rad_to_deg_clipped(calculate_rad_angle_between(target))
   end
 
   # Calculates the angle between this object and the target in radians.

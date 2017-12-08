@@ -55,7 +55,7 @@ class Planet < Entity
   # Determines if the planet is fully occupied (all docking slots are full)
   # return: true if full, false if not
   def full?
-    @docked_ship_ids.length >= docking_spots
+    @docked_ship_ids.size >= docking_spots
   end
 
   # Use the known owner id and ship ids to populate the docked_ships and owner

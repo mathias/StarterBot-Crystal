@@ -96,15 +96,12 @@ class Ship < Entity
   #                 want to crash onto planets)
   # return: The command trying to be passed to the Halite engine or nil if
   #         movement is not possible within max_corrections degrees.
-  def navigate(target, map, speed, opts={} of Symbol => (String | Int32))
-
-    #avoid_obstacles:true, max_corrections:90,
-    #          angular_step:1, ignore_ships:false, ignore_planets:false)
-    avoid_obstacles = opts[:avoid_obstacles] || true
-    max_corrections = opts[:max_corrections] || 90
-    angular_step = opts[:angular_step] || 1
-    ignore_ships = opts[:ignore_ships] || false
-    ignore_planets = opts[:ignore_planets] || false
+  def navigate(target, map, speed,
+               avoid_obstacles = true,
+               max_corrections = 90,
+               angular_step = 1,
+               ignore_ships = false,
+               ignore_planets = false)
 
     return if max_corrections <= 0
     distance = calculate_distance_between(target)
@@ -114,7 +111,7 @@ class Ship < Entity
     ignore << :ships if ignore_ships
     ignore << :planets if ignore_planets
 
-    if avoid_obstacles && map.obstacles_between(self, target, ignore).length > 0
+    if avoid_obstacles && map.obstacles_between(self, target, ignore).size > 0
       delta_radians = (angle + angular_step)/180.0 * Math::PI
       new_target_dx = Math.cos(delta_radians) * distance
       new_target_dy = Math.sin(delta_radians) * distance

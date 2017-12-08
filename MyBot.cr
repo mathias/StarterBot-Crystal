@@ -62,7 +62,7 @@ while true
         # wish to turn that option off.
         closest = ship.closest_point_to(planet)
         speed = Game::Constants::MAX_SPEED/2
-        navigate_command = ship.navigate(closest, map, speed, {ignore_ships: true})
+        navigate_command = ship.navigate(closest, map, speed, ignore_ships: true)
         # If the move is possible, add it to the command_queue (if there are too
         # many obstacles on the way or we are trapped (or we reached our
         # destination!), navigate_command will return null; don't fret though,

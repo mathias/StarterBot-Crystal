@@ -90,8 +90,8 @@ class Map
   def obstacles_between(ship, target, ignore=[] of Symbol)
     obstacles = [] of Entity
     entities = [] of Entity
-    entities.concat(planets) unless ignore.include?(:planets)
-    entities.concat(ships) unless ignore.include?(:ships)
+    entities.concat(planets) unless ignore.includes?(:planets)
+    entities.concat(ships) unless ignore.includes?(:ships)
 
     entities.each do |foreign_entity|
       next if foreign_entity == ship || foreign_entity == target
